@@ -1,14 +1,13 @@
 <template>
     <div>
-11111
-<Nav/>
+        你输入的页面地址不存在，<router-link to="/money">返回首页</router-link>
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: "Money"
-    }
+        name: "Notfound"
+    };
 </script>
 
 <style lang="scss" scoped>
