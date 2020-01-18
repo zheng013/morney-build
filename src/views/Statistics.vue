@@ -1,8 +1,7 @@
 <template>
-    <div>
-    33333
-<Nav/>
-    </div>
+    <Layout>
+        333333
+    </Layout>
 </template>
 
 <script lang="ts">

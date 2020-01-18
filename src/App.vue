@@ -1,22 +1,25 @@
 <template>
-    <div >
+    <div>
         <router-view/>
-        <router-link to="/"></router-link>
-        <router-link to="/money">记账</router-link>|
-        <router-link to="/labels">标签</router-link>|
-        <router-link to="/Statistics">统计</router-link>
     </div>
 </template>
 
 
 <script lang="ts">
-    import Vue from "vue";
-    import Test from "@/components/test.vue";
+    import vue from "vue";
 
-    export default Vue.extend({});
+    export default vue.extend({});
 </script>
 
 <style lang="scss">
+    * {
+        border: 0;
+        margin: 0;
+        box-sizing: border-box
+    }
+    body{
+        line-height: 1.5em;
+    }
 
     #app {
         font-family: "Avenir", Helvetica, Arial, sans-serif;
