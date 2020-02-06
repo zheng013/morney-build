@@ -1,6 +1,6 @@
 <template>
         <Layout>
-        111111
+        <p>111111</p>
         </Layout>
 </template>
 
@@ -11,6 +11,6 @@
 </script>
 
 <style lang="scss" scoped>
-
+        @import "~@/assets/style/helper.scss";
 
 </style>
