@@ -9,42 +9,22 @@
 
 <script lang="ts">
   import Vue from "vue";
-  import {Component,Prop} from "vue-property-decorator";
+  import {Component, Prop} from "vue-property-decorator";
 
   @Component
   export default class Types extends Vue {
     type = "-";
     @Prop(Number) propA: number | undefined;
+
+    //运行时放入可执行的一个环境下执行发生的错误    编译时false则无法得到js在终端会出现error
     typeSelect(type: string) {
       if (type !== "+" && type !== "-") {
         throw new Error("type is unknown");
       }
       this.type = type;
     }
-    mounted(){
-      console.log(this.propA);
-    }
   }
 
-
-  // export default {
-  //   name: "types",
-  //   props: ['xxx'],
-  //   data() {
-  //     return {type: '-'}
-  //   },
-  //   mounted() {
-  //     console.log(this.xxx)
-  //   },
-  //   methods: {
-  //     typeSelect(type) {
-  //       if (type !== '+' && type !== '-') {
-  //         throw new Error('type is unknown')
-  //       }
-  //       this.type = type
-  //     }
-  //   }
-  // }
 </script>
 
 <style lang="scss" scoped>
