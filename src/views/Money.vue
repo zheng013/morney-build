@@ -1,13 +1,13 @@
 <template>
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
-        <Tags/>
+        <Tags :data-source="tags"/>
         <Notes/>
-        <Types :propA="11"/>
+        <Types/>
         <NumberPad/>
     </Layout>
 </template>
-<script lang="ts">
+<script >
   import Tags from "@/components/Money/Tags.vue";
   import Notes from "@/components/Money/Notes.vue";
   import Types from "@/components/Money/Types.vue";
@@ -15,7 +15,12 @@
 
   export default {
     name: "Money",
-    components: {NumberPad, Types, Notes, Tags}
+    components: {NumberPad, Types, Notes, Tags},
+    data(){
+      return {
+        tags:['衣','食','住','行']
+      }
+    }
   };
 </script>
 <style lang="scss">
