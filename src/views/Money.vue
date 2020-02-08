@@ -3,7 +3,7 @@
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
         <Tags/>
         <Notes/>
-        <Types xxx="hello"/>
+        <Types :propA="11"/>
         <NumberPad/>
     </Layout>
 </template>
