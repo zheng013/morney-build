@@ -1,31 +1,47 @@
 <template>
     <div>
         <ul class="types">
-            <li :class="type==='-'&&'selected'" @click="typeSelect('-')">支出</li>
-            <li :class="type==='+'&&'selected'" @click="typeSelect('+')">收入</li>
+            <li :class="type ==='-'&&'selected'" @click="typeSelect('-')">支出</li>
+            <li :class="type ==='+'&&'selected'" @click="typeSelect('+')">收入</li>
         </ul>
     </div>
 </template>
 
-<script lang="js">
-  export default {
-    name: "types",
-    props: ['xxx'],
-    data() {
-      return {type: '-'}
-    },
-    mounted() {
-      console.log(this.xxx)
-    },
-    methods: {
-      typeSelect(type) {
-        if (type !== '+' && type !== '-') {
-          throw new Error('type is unknown')
-        }
-        this.type = type
+<script lang="ts">
+  import Vue from "vue";
+  import {Component} from "vue-property-decorator";
+
+  @Component
+  export default class Types extends Vue {
+    type = "-";
+
+    typeSelect(type:string) {
+      if (type !== "+" && type !== "-") {
+        throw new Error("type is unknown");
       }
+      this.type = type;
     }
   }
+
+
+  // export default {
+  //   name: "types",
+  //   props: ['xxx'],
+  //   data() {
+  //     return {type: '-'}
+  //   },
+  //   mounted() {
+  //     console.log(this.xxx)
+  //   },
+  //   methods: {
+  //     typeSelect(type) {
+  //       if (type !== '+' && type !== '-') {
+  //         throw new Error('type is unknown')
+  //       }
+  //       this.type = type
+  //     }
+  //   }
+  // }
 </script>
 
 <style lang="scss" scoped>
