@@ -1,7 +1,7 @@
 <template>
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
-        <Tags :data-source="tags"/>
+        <Tags :data-source.sync="tags"/>
         <Notes/>
         <Types/>
         <NumberPad/>
