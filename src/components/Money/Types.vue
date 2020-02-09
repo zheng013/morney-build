@@ -9,12 +9,12 @@
 
 <script lang="ts">
   import Vue from "vue";
-  import {Component, Prop} from "vue-property-decorator";
+  import {Component, Prop, Watch} from "vue-property-decorator";
 
   @Component
   export default class Types extends Vue {
-    type = "-";
-    @Prop(Number) propA: number | undefined;
+    type: string = "-";
+    @Prop(String) value!: string;
 
     //运行时放入可执行的一个环境下执行发生的错误    编译时false则无法得到js在终端会出现error
     typeSelect(type: string) {
@@ -22,6 +22,11 @@
         throw new Error("type is unknown");
       }
       this.type = type;
+    }
+
+    @Watch("type")
+    onValueChanged() {
+      this.$emit("update:value", this.type);
     }
   }
 
