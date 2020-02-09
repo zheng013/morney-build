@@ -2,6 +2,7 @@
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
         {{record}}
+        {{recordList}}
         <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
         <Notes @update:value="onUpdateNotes"/>
         <Types :value.sync="record.type"/>
@@ -20,13 +21,14 @@
     tags: string[]
     notes: string
     type: string
-    amount: number
+    amount: number//数据类型
+    createAt?: Date //类 \ 构造函数 ?代表属性可能不存在
   }
   @Component({components: {NumberPad, Types, Notes, Tags}})
 
   export default class Money extends Vue {
     tags = ["衣", "食", "住", "行"];
-    recordList: Record[] = [];
+    recordList: Record[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
     record: Record = {
       tags: [],
       notes: "",
@@ -53,7 +55,8 @@
     }
 
     saveRecord() {
-      const deepClone = JSON.parse(JSON.stringify(this.record));
+      const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+      deepClone.createAt = new Date();
       this.recordList.push(deepClone);
       window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
       console.log(this.recordList);
