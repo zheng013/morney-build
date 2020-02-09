@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul class="types">
-            <li :class="type ==='-'&&'selected'" @click="typeSelect('-')">支出</li>
-            <li :class="type ==='+'&&'selected'" @click="typeSelect('+')">收入</li>
+            <li :class="value ==='-'&&'selected'" @click="typeSelect('-')">支出</li>
+            <li :class="value ==='+'&&'selected'" @click="typeSelect('+')">收入</li>
         </ul>
     </div>
 </template>
@@ -13,7 +13,6 @@
 
   @Component
   export default class Types extends Vue {
-    type: string = "-";
     @Prop(String) value!: string;
 
     //运行时放入可执行的一个环境下执行发生的错误    编译时false则无法得到js在终端会出现error
@@ -21,13 +20,9 @@
       if (type !== "+" && type !== "-") {
         throw new Error("type is unknown");
       }
-      this.type = type;
+      this.$emit("update:value", type);
     }
 
-    @Watch("type")
-    onValueChanged() {
-      this.$emit("update:value", this.type);
-    }
   }
 
 </script>

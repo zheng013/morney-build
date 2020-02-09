@@ -4,8 +4,8 @@
         {{record}}
         <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
         <Notes @update:value="onUpdateNotes"/>
-        <Types @update:value="onUpdateType"/>
-        <NumberPad @update:value="onUpdateAmount"/>
+        <Types :value.sync="record.type"/>
+        <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
 </template>
 <script lang="ts">
@@ -26,10 +26,11 @@
 
   export default class Money extends Vue {
     tags = ["衣", "食", "住", "行"];
+    recordList: Record[] = [];
     record: Record = {
       tags: [],
       notes: "",
-      type: "",
+      type: "-",
       amount: 0
     };
 
@@ -45,16 +46,17 @@
       }
     }
 
-    onUpdateType(type:string) {
-      if (this.record) {
-        this.record.type = type;
-      }
-    }
-
     onUpdateAmount(number: string) {
       if (this.record) {
         this.record.amount = parseFloat(number);
       }
+    }
+
+    saveRecord() {
+      const deepClone = JSON.parse(JSON.stringify(this.record));
+      this.recordList.push(deepClone);
+      window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+      console.log(this.recordList);
     }
   }
 </script>
