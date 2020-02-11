@@ -14,7 +14,10 @@
   import Notes from "@/components/Money/Notes.vue";
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
-
+  // import model from "@/model.js";
+  const {model} = require("@/model.js");
+  console.log(model)  ;
+  const recordList: Record[] = model.fecth();
   type Record = {
     tags: string[]
     notes: string
@@ -22,25 +25,12 @@
     amount: number//数据类型
     createAt?: Date //类 \ 构造函数 ?代表属性可能不存在
   }
-  const version = window.localStorage.getItem("version");
-  const recordList: Record[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
-  if (version === "0.0.1") {
-    //数据迁移
-    recordList.forEach((record) => {
-      record.createAt = new Date(0);
-    });
-    window.localStorage.setItem("recordList", JSON.stringify(recordList));//数据保存
-  } else if(version==='0.0.2'){
-    //当数据库版本为3时，对数据进行层层的升级处理。
-  }
-  // window.localStorage.setItem('version','0.0.1') 初始版本
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
-  //window.localStorage.setItem("version", "0.0.3"); 层层递进
   @Component({components: {NumberPad, Types, Notes, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
     tags = ["衣", "食", "住", "行"];
-    recordList: Record[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
+    recordList: Record[] = recordList;
     record: Record = {
       tags: [],
       notes: "",
