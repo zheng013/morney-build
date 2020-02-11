@@ -14,24 +14,17 @@
   import Notes from "@/components/Money/Notes.vue";
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
-  // import model from "@/model.js";
-  const {model} = require("@/model.js");
-  console.log(model)  ;
-  const recordList: Record[] = model.fecth();
-  type Record = {
-    tags: string[]
-    notes: string
-    type: string
-    amount: number//数据类型
-    createAt?: Date //类 \ 构造函数 ?代表属性可能不存在
-  }
+  import model from "@/model";
+
+  const recordList= model.fetch();
+
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({components: {NumberPad, Types, Notes, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
     tags = ["衣", "食", "住", "行"];
-    recordList: Record[] = recordList;
-    record: Record = {
+    recordList: RecordItem[] = recordList;
+    record: RecordItem = {
       tags: [],
       notes: "",
       type: "-",
@@ -57,10 +50,10 @@
     }
 
     saveRecord() {
-      const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+      const deepClone: RecordItem =model.clone(this.record) ;
       deepClone.createAt = new Date();
       this.recordList.push(deepClone);
-      window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+      model.save(this.recordList);
       console.log(this.recordList);
     }
   }
