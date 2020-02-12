@@ -1,15 +1,74 @@
 <template>
     <Layout>
-        2222222
+        <ul class="tags">
+            <li v-for="tag in tags" :key="tag.id"><span>{{tag.name}}</span>
+                <Icon name="right"/>
+            </li>
+        </ul>
+        <div class="createTag-wrapper">
+            <button class="createTag" @click="createTags">新增标签</button>
+        </div>
     </Layout>
 </template>
 
 <script lang="ts">
-    export default {
-        name: "Labels"
+  import Vue from "vue";
+  import {Component} from "vue-property-decorator";
+  import Model from "@/models/tagsModel.ts";
+
+  Model.fetch();
+  @Component
+  export default class Labels extends Vue {
+    tags = Model.data;
+
+    createTags() {
+      const name = window.prompt("请输入标签名");
+      if(name){
+       const info= Model.create(name);
+        if(info==='duplicated'){
+          window.alert('您输入的标签名重复')
+        }else if(info==='success'){
+          window.alert('添加成功')
+        }
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>
+    @import '~@/assets/style/helper.scss';
 
+    .tags {
+        background: #f5f5f5;
+        padding-left: 16px;
+        font-size: 16px;
+
+        > li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 44px;
+            border-bottom: 1px solid #e6e6e6;
+
+            > svg {
+                color: #666666;
+                margin-right: 16px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+
+    .createTag {
+        background: $color-highlight;
+        color: white;
+        border-radius: 4px;
+        height: 40px;
+        padding: 0 16px;
+
+        &-wrapper {
+            text-align: center;
+            margin-top: 44px;
+        }
+    }
 </style>

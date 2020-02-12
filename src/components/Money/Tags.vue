@@ -27,17 +27,18 @@
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('update:value',this.selectedTags)
+      this.$emit("update:value", this.selectedTags);
     }
 
     create() {
       const name = window.prompt("请输入标签名");
-      if (name === "") {
-        window.alert("标签名不能为空");
-      } else {
+      console.log(this.dataSource);
+      if (name) {
         if (this.dataSource) {
-          this.$emit('update:dataSource',[...this.dataSource,name]); //等价于as string 通过触发事件进行外部数据修改
+          this.$emit("update:dataSource", [...this.dataSource, name]); //等价于as string 通过触发事件进行外部数据修改
         }
+      } else {
+        window.alert("标签名不能为空");
       }
     }
   }

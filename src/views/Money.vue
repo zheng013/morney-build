@@ -14,7 +14,7 @@
   import Notes from "@/components/Money/Notes.vue";
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
-  import model from "@/model";
+  import model from "@/models/recordListModel";
 
   const recordList= model.fetch();
 
@@ -50,7 +50,7 @@
     }
 
     saveRecord() {
-      const deepClone: RecordItem =model.clone(this.record) ;
+      const deepClone=model.clone(this.record) ;
       deepClone.createAt = new Date();
       this.recordList.push(deepClone);
       model.save(this.recordList);
