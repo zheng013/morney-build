@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        标签编辑
+        <div><button>删除</button></div>
     </Layout>
 </template>
 
@@ -16,10 +16,10 @@
       Model.fetch();
       const tags = Model.data;
       const tag = tags.filter(item => item.id === id)[0];
-      if (tag){
+      if (tag) {
         console.log(tag);
-      }else{
-        this.$router.replace('/404')
+      } else {
+        this.$router.replace("/404");
       }
     }
   }
