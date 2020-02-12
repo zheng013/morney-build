@@ -1,12 +1,13 @@
 <template>
     <Layout>
         <div class="tags">
-            <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`"><span>{{tag.name}}</span>
+            <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
+                <span>{{tag.name}}</span>
                 <Icon name="right"/>
             </router-link>
         </div>
         <div class="createTag-wrapper">
-            <button class="createTag" @click="createTags">新增标签</button>
+            <Button class="createTag" @click="createTags">添加标签</Button>
         </div>
     </Layout>
 </template>
@@ -15,20 +16,23 @@
   import Vue from "vue";
   import {Component} from "vue-property-decorator";
   import Model from "@/models/tagsModel.ts";
+  import Button from "@/components/Button.vue";
 
   Model.fetch();
-  @Component
+  @Component({
+    components: {Button}
+  })
   export default class Labels extends Vue {
     tags = Model.data;
 
     createTags() {
       const name = window.prompt("请输入标签名");
-      if(name){
-       const info= Model.create(name);
-        if(info==='duplicated'){
-          window.alert('您输入的标签名重复')
-        }else if(info==='success'){
-          window.alert('添加成功')
+      if (name) {
+        const info = Model.create(name);
+        if (info === "duplicated") {
+          window.alert("您输入的标签名重复");
+        } else if (info === "success") {
+          window.alert("添加成功");
         }
       }
     }
@@ -71,4 +75,5 @@
             margin-top: 44px;
         }
     }
+
 </style>
