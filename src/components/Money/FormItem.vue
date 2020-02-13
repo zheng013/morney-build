@@ -2,7 +2,7 @@
     <div>
         <label class="notes">
             <span class="name">{{fieldName}}</span>
-            <input type="text" v-model="value" :placeholder="placeHolder">
+            <input type="text" :value="value" @input="onValueChanged($event.target.value)" :placeholder="placeHolder">
         </label>
     </div>
 </template>
@@ -13,14 +13,14 @@
 
   @Component
   export default class FormItem extends Vue {
-    value: string = "";
+    @Prop({default:''}) readonly value!:string;
     @Prop({required: true}) fieldName!: string;
     @Prop() placeHolder!: string;
 
     // @Watch("value")
-    // onValueChanged(value: string) {
-    //   this.$emit("update:value", this.value = value);
-    // } 因为 input 的值一旦被用户变化，就会触发 @update:value 事件，所以就没必要再加一个 watch 了。
+    onValueChanged(value: string) {
+      this.$emit("update:value", value);
+    } //因为 input 的值一旦被用户变化，就会触发 @update:value 事件，所以就没必要再加一个 watch 了。
   }
 </script>
 

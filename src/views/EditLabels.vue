@@ -1,11 +1,11 @@
 <template>
     <Layout>
         <div class="navBar">
-            <Icon class="iconLeft" name="left"/>
+            <Icon class="iconLeft" name="left" @click.native="back"/>
             <span class="title">编辑标签</span>
         </div>
         <div class="form-wrapper">
-            <FormItem field-name="标签" place-holder="在这里输入标签名"/>
+            <FormItem field-name="标签" :value="tag.name" place-holder="在这里输入标签名" @input="update"/>
         </div>
         <div class="button-wrapper">
             <Button>删除标签</Button>
@@ -24,16 +24,25 @@
     components: {FormItem, Button}
   })
   export default class EditLabels extends Vue {
+    tag: Tag | undefined;
+
     created() {
       const id = this.$route.params.id;
       Model.fetch();
       const tags = Model.data;
       const tag = tags.filter(item => item.id === id)[0];
       if (tag) {
-        console.log(tag);
+        this.tag = tag;
       } else {
         this.$router.replace("/404");
       }
+    }
+    update(name:string) {
+
+    }
+
+    back() {
+      this.$router.back();
     }
   }
 </script>
@@ -47,6 +56,7 @@
         justify-content: center;
         border-bottom: 1px solid #e9e9e9;
         font-size: 16px;
+
         > .iconLeft {
             color: #333333;
             width: 20px;
@@ -56,7 +66,8 @@
         }
 
     }
-    .form-wrapper{
+
+    .form-wrapper {
         margin-top: 6px;
         overflow: hidden;
     }
