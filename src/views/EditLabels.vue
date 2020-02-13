@@ -5,10 +5,10 @@
             <span class="title">编辑标签</span>
         </div>
         <div class="form-wrapper">
-            <FormItem field-name="标签" :value="tag.name" place-holder="在这里输入标签名" @input="update"/>
+            <FormItem field-name="标签" :value="tag.name" place-holder="在这里输入标签名" @update:value="update"/>
         </div>
         <div class="button-wrapper">
-            <Button>删除标签</Button>
+            <Button @click="destroy">删除标签</Button>
         </div>
     </Layout>
 </template>
@@ -24,7 +24,7 @@
     components: {FormItem, Button}
   })
   export default class EditLabels extends Vue {
-    tag: Tag | undefined;
+    tag?: Tag = undefined;
 
     created() {
       const id = this.$route.params.id;
@@ -37,8 +37,18 @@
         this.$router.replace("/404");
       }
     }
-    update(name:string) {
 
+    update(name: string) {
+      if (this.tag) {
+        Model.update(this.tag.id, name);
+      }
+    }
+
+    destroy() {
+      if (this.tag) {
+        Model.destroy(this.tag.id);
+      }
+      this.$router.back()
     }
 
     back() {
