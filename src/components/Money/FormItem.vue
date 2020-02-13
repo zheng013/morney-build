@@ -1,8 +1,8 @@
 <template>
     <div>
         <label class="notes">
-            <span class="name">{{this.fieldName}}</span>
-            <input type="text" v-model="value" :placeholder="this.placeHolder">
+            <span class="name">{{fieldName}}</span>
+            <input type="text" v-model="value" :placeholder="placeHolder">
         </label>
     </div>
 </template>
@@ -12,15 +12,15 @@
   import {Component, Watch, Prop} from "vue-property-decorator";
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormItem extends Vue {
     value: string = "";
     @Prop({required: true}) fieldName!: string;
     @Prop() placeHolder!: string;
 
-    @Watch("value")
-    onValueChanged(value: string) {
-      this.$emit("update:value", this.value = value);
-    }
+    // @Watch("value")
+    // onValueChanged(value: string) {
+    //   this.$emit("update:value", this.value = value);
+    // } 因为 input 的值一旦被用户变化，就会触发 @update:value 事件，所以就没必要再加一个 watch 了。
   }
 </script>
 
@@ -37,7 +37,7 @@
         }
 
         > input {
-            height: 64px;
+            height: 40px;
             padding-right: 16px;
             flex-grow: 1;
             background: transparent;

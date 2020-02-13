@@ -7,7 +7,7 @@
             </router-link>
         </div>
         <div class="createTag-wrapper">
-            <Button class="createTag" @click="createTags">添加标签</Button>
+            <Button class="createTag" @click="createTags">添加标签</Button> <!--可以使用.native的修饰符表示接受原生事件-->
         </div>
     </Layout>
 </template>

@@ -2,7 +2,9 @@
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
         <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
-        <FormItem field-name="备注" @update:value="onUpdateNotes" place-holder="在这里输入备注"/>
+        <div class="form-wrapper">
+            <FormItem field-name="备注" @update:value="onUpdateNotes" place-holder="在这里输入备注"/>
+        </div>
         <Types :value.sync="record.type"/>
         <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
@@ -16,7 +18,7 @@
   import NumberPad from "@/components/Money/NumberPad.vue";
   import model from "@/models/recordListModel";
 
-  const recordList= model.fetch();
+  const recordList = model.fetch();
 
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
@@ -50,7 +52,7 @@
     }
 
     saveRecord() {
-      const deepClone=model.clone(this.record) ;
+      const deepClone = model.clone(this.record);
       deepClone.createAt = new Date();
       this.recordList.push(deepClone);
       model.save(this.recordList);
@@ -62,5 +64,9 @@
     .layout-content {
         display: flex;
         flex-direction: column;
+    }
+    .form-wrapper{
+        padding: 12px 0;
+        background:#f5f5f5 ;
     }
 </style>

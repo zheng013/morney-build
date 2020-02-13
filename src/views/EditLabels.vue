@@ -1,15 +1,13 @@
 <template>
     <Layout>
-        <ul>
-            <li class="nav">
-                <Icon name="left"/>
-                <span>编辑标签</span>
-            </li>
-            <li class="content">
-                <FormItem field-name="标签" place-holder="在这里输入标签名"/>
-            </li>
-        </ul>
-        <div class="deleteLabel">
+        <div class="navBar">
+            <Icon class="iconLeft" name="left"/>
+            <span class="title">编辑标签</span>
+        </div>
+        <div class="form-wrapper">
+            <FormItem field-name="标签" place-holder="在这里输入标签名"/>
+        </div>
+        <div class="button-wrapper">
             <Button>删除标签</Button>
         </div>
     </Layout>
@@ -41,33 +39,31 @@
 </script>
 
 <style lang="scss" scoped>
-    .nav {
+    .navBar {
         background: #f5f5f5;
         padding: 12px 0;
         display: flex;
         align-items: center;
         justify-content: center;
         border-bottom: 1px solid #e9e9e9;
-
-        > svg {
+        font-size: 16px;
+        > .iconLeft {
             color: #333333;
-            width: 18px;
-            height: 18px;
-            left: 16px;
+            width: 20px;
+            height: 20px;
+            left: 12px;
             position: absolute;
         }
 
-        > span {
-            text-align: center;
-        }
+    }
+    .form-wrapper{
+        margin-top: 6px;
+        overflow: hidden;
     }
 
-    button {
-        margin-top: 400px;
-    }
-
-    .deleteLabel {
+    .button-wrapper {
         text-align: center;
+        margin-top: 44px;
     }
 
 </style>
