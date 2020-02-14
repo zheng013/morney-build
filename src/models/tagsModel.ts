@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 const localStorageKeyName = 'tags';
 
 type TagsModel = {
@@ -5,7 +7,7 @@ type TagsModel = {
   fetch: () => Tag[]
   save: () => void
   update: (id: string, name: string) => void
-  destroy:(id:string)=>void
+  destroy: (id: string) => void
   create: (name: string) => 'success' | 'duplicated' //联合类型
 }
 
@@ -17,21 +19,22 @@ const tagsModel: TagsModel = {
   },
   create(name: string) {
     const names = this.data.map(item => item.name);
+    const id = createId().toString();
     if (names.indexOf(name) >= 0) {return 'duplicated';}
-    this.data.push({id: name, name: name});
+    this.data.push({id, name: name});
     this.save();
     return 'success';
   },
   update(id: string, name: string) {
     const tag = this.data.filter(item => item.id === id)[0];
-    tag.id = tag.name = name;
+     tag.name = name;
     this.save();
   },
   destroy(id: string) {
     const tag = this.data.filter(item => item.id === id)[0];
     const index: number = this.data.indexOf(tag);
     this.data.splice(index, 1);
-    this.save()
+    this.save();
   },
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
