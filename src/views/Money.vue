@@ -25,8 +25,8 @@
   @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
-    tags= window.tagList||["衣", "食", "住", "行"];
-    recordList: RecordItem[] = window.recordList;
+    tags= window.store.tagList||["衣", "食", "住", "行"];
+    recordList: RecordItem[] = window.store.recordList;
     record: RecordItem = {
       tags: [],
       notes: "",
@@ -54,7 +54,7 @@
 
     saveRecord() {
       if(this.record){
-        window.createRecord(this.record)
+        window.store.createRecord(this.record)
       }
     }
   }

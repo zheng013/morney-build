@@ -26,7 +26,7 @@
     tag?: Tag = undefined;
 
     created() {
-      this.tag=window.findTag(this.$route.params.id);
+      this.tag=window.store.findTag(this.$route.params.id);
       if (!this.tag) {
         this.$router.replace("/404");
       }
@@ -34,13 +34,13 @@
 
     update(name: string) {
       if (this.tag) {
-        window.update(this.tag.id,name)
+        window.store.update(this.tag.id,name)
       }
     }
 
     destroy() {
       if (this.tag) {
-        window.destroy(this.tag.id);
+        window.store.destroy(this.tag.id);
         this.$router.back()
       }
     }

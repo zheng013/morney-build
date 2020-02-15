@@ -18,11 +18,13 @@ type Tag = {
   name: string
 }
 interface Window {
-  tagList:Tag[]
-  createTags:(name:string)=>void
-  destroy:(name:string)=>void
-  update:TagsModel['update']
-  findTag:(id:string)=>Tag|undefined
-  recordList:RecordItem[]
-  createRecord:(record:RecordItem)=>void
+  store:{
+    tagList:Tag[]
+    createTags:(name:string)=>void
+    destroy:(name:string)=>void
+    update:TagsModel['update']
+    findTag:(id:string)=>Tag|undefined
+    recordList:RecordItem[]
+    createRecord:(record:RecordItem)=>void
+  }
 }
