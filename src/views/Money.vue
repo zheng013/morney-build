@@ -2,7 +2,7 @@
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
         {{record}}
-        <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+        <Tags :data-source.sync="tags"  @update:value="onUpdateTags"/>
         <div class="form-wrapper">
             <FormItem field-name="备注" @update:value="onUpdateNotes" place-holder="在这里输入备注"/>
         </div>
@@ -17,16 +17,18 @@
   import FormItem from "@/components/Money/FormItem.vue";
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
+
   // import model from "@/models/recordListModel.ts";
-  import tagsModel from "@/models/tagsModel.ts"
+  import tagsModel from "@/models/tagsModel.ts";
+  import store from "@/store/index2.ts";
 
   // const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
-    tags= window.store.tagList||["衣", "食", "住", "行"];
-    recordList: RecordItem[] = window.store.recordList;
+    tags = store.tagList;//||["衣", "食", "住", "行"];
+    recordList: RecordItem[] = store.recordList;
     record: RecordItem = {
       tags: [],
       notes: "",
@@ -34,7 +36,7 @@
       amount: 0
     };
 
-    onUpdateTags(tag: string[]) {
+    onUpdateTags(tag: Tag[]) {
       if (this.record) {
         this.record.tags = tag;
       }
@@ -53,8 +55,8 @@
     }
 
     saveRecord() {
-      if(this.record){
-        window.store.createRecord(this.record)
+      if (this.record) {
+        store.createRecord(this.record);
       }
     }
   }

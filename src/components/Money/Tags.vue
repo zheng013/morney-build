@@ -1,8 +1,8 @@
 <template>
     <div class="tags">
         <ul class="current">
-            <li v-for="tag in dataSource" :key="tag.id" :class="{selected:selectedTags.indexOf(tag.name)>=0}"
-                @click="toggle(tag.name)">{{tag.name}}
+            <li v-for="tag in dataSource" :key="tag.id" :class="{selected:selectedTags.indexOf(tag)>=0}"
+                @click="toggle(tag)">{{tag.name}}
             </li>
         </ul>
         <div class="new">
@@ -18,10 +18,10 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop(Array) readonly dataSource: string[] | undefined;
-    selectedTags: string[] = [];
+    @Prop(Array) readonly dataSource: Tag[] | undefined;
+    selectedTags: Tag[] = [];
 
-    toggle(tag: string) {
+    toggle(tag: Tag) {
       const index = this.selectedTags.indexOf(tag);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);

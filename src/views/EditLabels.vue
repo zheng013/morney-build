@@ -18,6 +18,7 @@
   import {Component} from "vue-property-decorator";
   import Button from "@/components/Button.vue";
   import FormItem from "@/components/Money/FormItem.vue";
+  import store from "@/store/index2.ts";
 
   @Component({
     components: {FormItem, Button}
@@ -26,7 +27,7 @@
     tag?: Tag = undefined;
 
     created() {
-      this.tag=window.store.findTag(this.$route.params.id);
+      this.tag = store.findTag(this.$route.params.id);
       if (!this.tag) {
         this.$router.replace("/404");
       }
@@ -34,14 +35,14 @@
 
     update(name: string) {
       if (this.tag) {
-        window.store.update(this.tag.id,name)
+        store.update(this.tag.id, name);
       }
     }
 
     destroy() {
       if (this.tag) {
-        window.store.destroy(this.tag.id);
-        this.$router.back()
+        store.destroy(this.tag.id);
+        this.$router.back();
       }
     }
 

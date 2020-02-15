@@ -1,5 +1,5 @@
 type RecordItem = {
-  tags: string[]
+  tags: Tag[]
   notes: string
   type: string
   amount: number//数据类型
@@ -18,13 +18,4 @@ type Tag = {
   name: string
 }
 interface Window {
-  store:{
-    tagList:Tag[]
-    createTags:(name:string)=>void
-    destroy:(name:string)=>void
-    update:TagsModel['update']
-    findTag:(id:string)=>Tag|undefined
-    recordList:RecordItem[]
-    createRecord:(record:RecordItem)=>void
-  }
 }
