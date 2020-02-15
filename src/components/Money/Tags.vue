@@ -1,8 +1,8 @@
 <template>
     <div class="tags">
         <ul class="current">
-            <li v-for="tag in dataSource" :key="tag" :class="{selected:selectedTags.indexOf(tag)>=0}"
-                @click="toggle(tag)">{{tag}}
+            <li v-for="tag in dataSource" :key="tag.id" :class="{selected:selectedTags.indexOf(tag.name)>=0}"
+                @click="toggle(tag.name)">{{tag.name}}
             </li>
         </ul>
         <div class="new">
@@ -14,6 +14,7 @@
 <script lang="ts">
   import Vue from "vue";
   import {Component, Prop} from "vue-property-decorator";
+  import createId from "@/lib/createId";
 
   @Component
   export default class Tags extends Vue {
@@ -35,7 +36,8 @@
       console.log(this.dataSource);
       if (name) {
         if (this.dataSource) {
-          this.$emit("update:dataSource", [...this.dataSource, name]); //等价于as string 通过触发事件进行外部数据修改
+          const id = createId();
+          this.$emit("update:dataSource", [...this.dataSource, {id, name}]); //等价于as string 通过触发事件进行外部数据修改
         }
       } else {
         window.alert("标签名不能为空");

@@ -27,7 +27,7 @@ const tagsModel: TagsModel = {
   },
   update(id: string, name: string) {
     const tag = this.data.filter(item => item.id === id)[0];
-     tag.name = name;
+    tag.name = name;
     this.save();
   },
   destroy(id: string) {

@@ -17,15 +17,16 @@
   import FormItem from "@/components/Money/FormItem.vue";
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
-  import model from "@/models/recordListModel";
+  import model from "@/models/recordListModel.ts";
+  import tagsModel from "@/models/tagsModel.ts"
 
   const recordList = model.fetch();
-
+  const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
-    tags = ["衣", "食", "住", "行"];
+    tags= tagList||["衣", "食", "住", "行"];
     recordList: RecordItem[] = recordList;
     record: RecordItem = {
       tags: [],
@@ -53,11 +54,7 @@
     }
 
     saveRecord() {
-      const deepClone = model.clone(this.record);
-      deepClone.createAt = new Date();
-      this.recordList.push(deepClone);
-      model.save(this.recordList);
-      console.log(this.recordList);
+      model.create(this.record)
     }
   }
 </script>
@@ -66,8 +63,9 @@
         display: flex;
         flex-direction: column;
     }
-    .form-wrapper{
+
+    .form-wrapper {
         padding: 12px 0;
-        background:#f5f5f5 ;
+        background: #f5f5f5;
     }
 </style>
