@@ -23,4 +23,6 @@ interface Window {
   destroy:(name:string)=>void
   update:TagsModel['update']
   findTag:(id:string)=>Tag|undefined
+  recordList:RecordItem[]
+  createRecord:(record:RecordItem)=>void
 }
