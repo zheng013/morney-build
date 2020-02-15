@@ -15,7 +15,6 @@
 <script lang="ts">
   import Vue from "vue";
   import {Component} from "vue-property-decorator";
-  // import Model from "@/models/tagsModel.ts";
   import Button from "@/components/Button.vue";
 
   // Model.fetch();
@@ -28,12 +27,7 @@
     createTags() {
       const name = window.prompt("请输入标签名");
       if (name) {
-        const info = Model.create(name);
-        if (info === "duplicated") {
-          window.alert("您输入的标签名重复");
-        } else if (info === "success") {
-          window.alert("添加成功");
-        }
+        window.createTags(name);
       }
     }
   }

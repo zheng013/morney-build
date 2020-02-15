@@ -16,7 +16,7 @@
 <script lang="ts">
   import Vue from "vue";
   import {Component} from "vue-property-decorator";
-  // import Model from "@/models/tagsModel.ts";
+  import Model from "@/models/tagsModel.ts";
   import Button from "@/components/Button.vue";
   import FormItem from "@/components/Money/FormItem.vue";
 

@@ -11,4 +11,5 @@ type Tag = {
 }
 interface Window {
   tagList:Tag[]
+  createTags:(name:string)=>void
 }
