@@ -15,15 +15,15 @@
 <script lang="ts">
   import Vue from "vue";
   import {Component} from "vue-property-decorator";
-  import Model from "@/models/tagsModel.ts";
+  // import Model from "@/models/tagsModel.ts";
   import Button from "@/components/Button.vue";
 
-  Model.fetch();
+  // Model.fetch();
   @Component({
     components: {Button}
   })
   export default class Labels extends Vue {
-    tags = Model.data;
+    tags = window.tagList;
 
     createTags() {
       const name = window.prompt("请输入标签名");

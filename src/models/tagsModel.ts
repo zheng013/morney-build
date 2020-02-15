@@ -12,7 +12,7 @@ type TagsModel = {
 }
 
 const tagsModel: TagsModel = {
-  data: [],
+  data:[],
   fetch() {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
     return this.data;

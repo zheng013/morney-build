@@ -21,12 +21,12 @@
   import tagsModel from "@/models/tagsModel.ts"
 
   const recordList = model.fetch();
-  const tagList=tagsModel.fetch();
+  // const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
 
   export default class Money extends Vue {
-    tags= tagList||["衣", "食", "住", "行"];
+    tags= window.tagList||["衣", "食", "住", "行"];
     recordList: RecordItem[] = recordList;
     record: RecordItem = {
       tags: [],
