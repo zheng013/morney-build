@@ -1,7 +1,7 @@
 <template>
     <div class="tags">
         <ul class="current">
-            <li v-for="tag in dataSource" :key="tag.id" :class="{selected:selectedTags.indexOf(tag)>=0}"
+            <li v-for="tag in tags" :key="tag.id" :class="{selected:selectedTags.indexOf(tag)>=0}"
                 @click="toggle(tag)">{{tag.name}}
             </li>
         </ul>
@@ -19,7 +19,8 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop(Array) readonly dataSource: Tag[] | undefined;
+    tags: Tag[] = store.fetchTagList();
+    // @Prop(Array,{required:true}) readonly dataSource: Tag[] | undefined;
     selectedTags: Tag[] = [];
 
     toggle(tag: Tag) {
@@ -34,9 +35,8 @@
 
     create() {
       const name = window.prompt("请输入标签名");
-      console.log(this.dataSource);
       if (name) {
-        store.createTags(name)
+        store.createTags(name);
         // if (this.dataSource) {
         //   const id = createId();
         //   this.$emit("update:dataSource", [...this.dataSource, {id, name}]); //等价于as string 通过触发事件进行外部数据修改

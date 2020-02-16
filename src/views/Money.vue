@@ -2,7 +2,7 @@
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
         {{record}}
-        <Tags :data-source.sync="tags"  @update:value="onUpdateTags"/>
+        <Tags @update:value="onUpdateTags"/>
         <div class="form-wrapper">
             <FormItem field-name="备注" @update:value="onUpdateNotes" place-holder="在这里输入备注"/>
         </div>
