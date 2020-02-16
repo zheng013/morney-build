@@ -15,6 +15,7 @@
   import Vue from "vue";
   import {Component, Prop} from "vue-property-decorator";
   import createId from "@/lib/createId";
+  import store from "@/store/index2";
 
   @Component
   export default class Tags extends Vue {
@@ -35,10 +36,11 @@
       const name = window.prompt("请输入标签名");
       console.log(this.dataSource);
       if (name) {
-        if (this.dataSource) {
-          const id = createId();
-          this.$emit("update:dataSource", [...this.dataSource, {id, name}]); //等价于as string 通过触发事件进行外部数据修改
-        }
+        store.createTags(name)
+        // if (this.dataSource) {
+        //   const id = createId();
+        //   this.$emit("update:dataSource", [...this.dataSource, {id, name}]); //等价于as string 通过触发事件进行外部数据修改
+        // }
       } else {
         window.alert("标签名不能为空");
       }
