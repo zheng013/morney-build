@@ -14,17 +14,14 @@
 <script lang="ts">
   // import Vue from "vue";
   // import { Prop} from "vue-property-decorator";
-  import Component,{mixins} from "vue-class-component";
-  import {CreateTag} from "@/mixins/tagHelper"
+  import Component, {mixins} from "vue-class-component";
+  import {TagHelper} from "@/mixins/TagHelper";
 
-  @Component({
-    computed:{
-      tags(){
-        return this.$store.state.tagList;
-      }
+  @Component
+  export default class Tags extends mixins(TagHelper) {
+    get tags() {
+      return this.$store.state.tagList;
     }
-  })
-  export default class Tags extends mixins(CreateTag) {
 
     // @Prop(Array,{required:true}) readonly dataSource: Tag[] | undefined;
     selectedTags: Tag[] = [];

@@ -21,24 +21,22 @@
 
   @Component({
     components: {FormItem, Button},
-    computed:{
-      tag(){
-        return this.$store.state.tag
-      }
-    }
   })
   export default class EditLabels extends Vue {
+    get tag() {
+      return this.$store.state.tag;
+    }
 
     created() {
       this.$store.commit("findTag", this.$route.params.id);
-      if (!this.$store.state.tag) {
+      if (!this.tag) {
         this.$router.replace("/404");
       }
     }
 
     update(name: string) {
-      if (this.$store.state.tag) {
-        this.$store.commit('update',{id:this.$store.state.tag.id,name:name})
+      if (this.tag) {
+        this.$store.commit("update", {id: this.tag.id, name: name});
       }
     }
 
