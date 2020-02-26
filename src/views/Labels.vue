@@ -7,15 +7,17 @@
             </router-link>
         </div>
         <div class="createTag-wrapper">
-            <Button class="createTag" @click="createTags">添加标签</Button> <!--可以使用.native的修饰符表示接受原生事件-->
+            <Button class="createTag" @click="createTag">添加标签</Button> <!--可以使用.native的修饰符表示接受原生事件-->
         </div>
     </Layout>
 </template>
 
 <script lang="ts">
-  import Vue from "vue";
-  import {Component} from "vue-property-decorator";
+  // import Vue from "vue";
+  // import {Component} from "vue-property-decorator";
   import Button from "@/components/Button.vue";
+  import {CreateTag} from "@/mixins/tagHelper"
+  import Component, {mixins} from "vue-class-component";
 
   // Model.fetch();
   @Component({
@@ -26,7 +28,11 @@
       }
     }
   })
-  export default class Labels extends Vue {
+  export default class Labels extends mixins(CreateTag){
+    beforeCreate(){
+      this.$store.commit('fetchTagList')
+    }
+
     createTags() {
       const name = window.prompt("请输入标签名");
       if (name) {
