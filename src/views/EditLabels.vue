@@ -28,6 +28,7 @@
     }
 
     created() {
+      this.$store.commit("fetchTagList");
       this.$store.commit("findTag", this.$route.params.id);
       if (!this.tag) {
         this.$router.replace("/404");

@@ -47,17 +47,18 @@ const store = new Vuex.Store({
       state.tagList.splice(index, 1);
       store.commit('saveTagList');
     },
-    update(state, playload) {
-      const tag = state.tagList.filter(item => item.id === playload.id)[0];
+    update(state, payload: { id: string, name: string }) {
+      const {name, id} = payload;
+      const tag = state.tagList.filter(item => item.id === id)[0];
       if (tag) {
-        tag.name = playload.name;
+        tag.name = name;
       }
       store.commit('saveTagList');
     },
 
 
     findTag(state, id: string) {
-      state.tag=state.tagList.filter(item => item.id === id)[0];
+      state.tag = state.tagList.filter(item => item.id === id)[0];
     },
     saveTagList(state) {
       window.localStorage.setItem('tags', JSON.stringify(state.tagList));
