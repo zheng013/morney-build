@@ -18,23 +18,32 @@
   import Types from "@/components/Money/Types.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
 
-  // import model from "@/models/recordListModel.ts";
-  import tagsModel from "@/models/tagsModel.ts";
+
   import store from "@/store/index2.ts";
 
   // const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
-  @Component({components: {NumberPad, Types, FormItem, Tags}}) //必须置为最后一行
+  @Component({
+    components: {NumberPad, Types, FormItem, Tags},
+    computed: {
+      recordList() {
+        return this.$store.state.recordList;
+      }
+    }
+  }) //必须置为最后一行
 
   export default class Money extends Vue {
     tags = store.tagList;//||["衣", "食", "住", "行"];
-    recordList: RecordItem[] = store.recordList;
     record: RecordItem = {
       tags: [],
       notes: "",
       type: "-",
       amount: 0
     };
+
+    created() {
+      this.$store.commit("fetchRecordList");
+    }
 
     onUpdateTags(tag: Tag[]) {
       if (this.record) {
@@ -56,7 +65,7 @@
 
     saveRecord() {
       if (this.record) {
-        store.createRecord(this.record);
+        this.$store.commit("createRecord", this.record);
       }
     }
   }
