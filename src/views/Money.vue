@@ -19,8 +19,6 @@
   import NumberPad from "@/components/Money/NumberPad.vue";
 
 
-  import store from "@/store/index2.ts";
-
   // const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({
@@ -28,12 +26,14 @@
     computed: {
       recordList() {
         return this.$store.state.recordList;
+      },
+      tags(){
+        return this.$store.state.tags
       }
     }
   }) //必须置为最后一行
 
   export default class Money extends Vue {
-    tags = store.tagList;//||["衣", "食", "住", "行"];
     record: RecordItem = {
       tags: [],
       notes: "",
@@ -43,6 +43,7 @@
 
     created() {
       this.$store.commit("fetchRecordList");
+      this.$store.commit("fetchTagList")
     }
 
     onUpdateTags(tag: Tag[]) {

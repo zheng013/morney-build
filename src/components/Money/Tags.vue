@@ -14,14 +14,23 @@
 <script lang="ts">
   import Vue from "vue";
   import {Component, Prop} from "vue-property-decorator";
-  import createId from "@/lib/createId";
-  import store from "@/store/index2";
 
-  @Component
+
+  @Component({
+    computed:{
+      tags(){
+        return this.$store.state.tagList;
+      }
+    }
+  })
   export default class Tags extends Vue {
-    tags: Tag[] = store.fetchTagList();
+
     // @Prop(Array,{required:true}) readonly dataSource: Tag[] | undefined;
     selectedTags: Tag[] = [];
+
+    beforeCreate() {
+      this.$store.commit("fetchTagList");
+    }
 
     toggle(tag: Tag) {
       const index = this.selectedTags.indexOf(tag);
@@ -36,7 +45,7 @@
     create() {
       const name = window.prompt("请输入标签名");
       if (name) {
-        store.createTags(name);
+        this.$store.commit('createTags',name);
         // if (this.dataSource) {
         //   const id = createId();
         //   this.$emit("update:dataSource", [...this.dataSource, {id, name}]); //等价于as string 通过触发事件进行外部数据修改
