@@ -35,4 +35,7 @@
             display: none;
         }
     }
+    ::v-deep .interval-item{
+        height: 48px;
+    }
 </style>
