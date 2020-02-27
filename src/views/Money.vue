@@ -17,6 +17,7 @@
   import FormItem from "@/components/Money/FormItem.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
   import Tabs from '@/components/Tabs.vue'
+  import typeList from "@/constants/typeList"
 
 
   // const tagList=tagsModel.fetch();
@@ -40,10 +41,7 @@
       type: "-",
       amount: 0
     };
-    typeList = [
-      {text: "支出", value: "-"},
-      {text: "收入", value: "+"},
-    ];
+    typeList = typeList;
 
     created() {
       this.$store.commit("fetchRecordList");
