@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul class="types">
-            <li :class="value ==='-'&&'selected'" @click="typeSelect('-')">支出</li>
-            <li :class="value ==='+'&&'selected'" @click="typeSelect('+')">收入</li>
+            <li :class="{[classPrefix+'-item']:classPrefix,selected:value==='-'}" @click="typeSelect('-')">支出</li>
+            <li :class="{[classPrefix+'-item']:classPrefix,selected:value==='+'}" @click="typeSelect('+')">收入</li>
         </ul>
     </div>
 </template>
@@ -14,6 +14,7 @@
   @Component
   export default class Types extends Vue {
     @Prop(String) value!: string;
+    @Prop(String) classPrefix?:string;
 
     //运行时放入可执行的一个环境下执行发生的错误    编译时false则无法得到js在终端会出现error
     typeSelect(type: string) {
