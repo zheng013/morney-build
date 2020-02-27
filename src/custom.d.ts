@@ -19,3 +19,6 @@ type Tag = {
 }
 interface Window {
 }
+type DataSourceItem = {
+  text: string, value: string
+};
