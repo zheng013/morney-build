@@ -24,6 +24,7 @@
   import typeList from "@/constants/typeList";
   import intervalList from "@/constants/intervalList";
   import dayjs from "dayjs";
+  import clone from "@/lib/clone";
 
   @Component({
     components: {Tabs}
@@ -37,10 +38,10 @@
     beautyTitle(string: string) {
       const day = dayjs(string);
       const now = dayjs();
-      if(day.isSame(now,'day')){return '今天'}
-      if(day.isSame(now.subtract(1,'day'),'day')){return '昨天'}
-      if(day.isSame(now.subtract(2,'day'),'day')) {return '前天'}
-      if(day.isBefore(now.subtract(2,'day'),'day')&&day.isSame(now,'year')) {return day.format('M月D日')}
+      if (day.isSame(now, "day")) {return "今天";}
+      if (day.isSame(now.subtract(1, "day"), "day")) {return "昨天";}
+      if (day.isSame(now.subtract(2, "day"), "day")) {return "前天";}
+      if (day.isBefore(now.subtract(2, "day"), "day") && day.isSame(now, "year")) {return day.format("M月D日");}
     }
 
     tagString(tags: Tag[]) {
@@ -57,18 +58,20 @@
     }
 
     get result() {
-      type HashTableItem = {
-        title: string
-        items: RecordItem[]
-      }
+      // type HashTableItem = {
+      //   title: string
+      //   items: RecordItem[]
+      // }
       const {recordList} = this;
-      const hashTable: { [key: string]: HashTableItem } = {};
-      for (let i = 0; i < recordList.length; i++) {
-        const [date, time] = recordList[i].createAt.split("T");
-        hashTable[date] = hashTable[date] || {title: date, items: []};
-        hashTable[date].items.push(recordList[i]);
-      }
-      return hashTable;
+      const hashTable: { tittle: string, items: RecordItem[] } [] = [];
+      // for (let i = 0; i < recordList.length; i++) {
+      //   const [date, time] = recordList[i].createAt.split("T");
+      //   hashTable[date] = hashTable[date] || {title: date, items: []};
+      //   hashTable[date].items.push(recordList[i]);
+      // }
+      const newRecordList = clone(recordList as RecordItem[]).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      console.log(newRecordList);
+      return [];
 
     }
   }
