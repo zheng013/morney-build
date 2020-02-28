@@ -2,18 +2,18 @@
     <Layout>
         <Tabs :data-source='typeList' class-prefix="type" :value.sync="type"/>
         <Tabs :data-source='intervalList' class-prefix="interval" :value.sync="intervalType"/>
-        <div>
-            <ol>
-                <li v-for="group in result" :key="group.id">
-                    <h3 class="title">{{group.title}}</h3>
-                    <ol>
-                        <li v-for="item in group.items" class="record" :key="item.id">
-                            <span>{{tagString(item.tags)}}</span><span>{{item.amount}}</span>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-        </div>
+        <ol>
+            <li v-for="group in result" :key="group.id">
+                <h3 class="title">{{beautyTitle(group.title)}}</h3>
+                <ol>
+                    <li v-for="item in group.items" class="record" :key="item.id">
+                        <span>{{tagString(item.tags)}}</span>
+                        <span class="notes">{{item.notes}}</span>
+                        <span>¥{{item.amount}}</span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
     </Layout>
 </template>
 
@@ -23,6 +23,7 @@
   import Tabs from "@/components/Tabs.vue";
   import typeList from "@/constants/typeList";
   import intervalList from "@/constants/intervalList";
+  import dayjs from "dayjs";
 
   @Component({
     components: {Tabs}
@@ -32,6 +33,15 @@
     intervalType = "day";
     intervalList = intervalList;
     typeList = typeList;
+
+    beautyTitle(string: string) {
+      const day = dayjs(string);
+      const now = dayjs();
+      if(day.isSame(now,'day')){return '今天'}
+      if(day.isSame(now.subtract(1,'day'),'day')){return '昨天'}
+      if(day.isSame(now.subtract(2,'day'),'day')) {return '前天'}
+      if(day.isBefore(now.subtract(2,'day'),'day')&&day.isSame(now,'year')) {return day.format('M月D日')}
+    }
 
     tagString(tags: Tag[]) {
       const names = tags.map(item => item.name);
@@ -97,5 +107,14 @@
     .record {
         @extend %item;
 
+    }
+
+    .notes {
+        margin-right: auto;
+        margin-left: 8px;
+        color: #999999;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 </style>
