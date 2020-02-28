@@ -5,10 +5,10 @@
         <div>
             <ol>
                 <li v-for="group in result" :key="group.id">
-                    {{group.title}}
+                    <h3 class="title">{{group.title}}</h3>
                     <ol>
-                        <li v-for="item in group.items" :key="item.id">
-                            {{item.amount}}
+                        <li v-for="item in group.items" class="record" :key="item.id">
+                            <span>{{tagString(item.tags)}}</span><span>{{item.amount}}</span>
                         </li>
                     </ol>
                 </li>
@@ -33,6 +33,11 @@
     intervalList = intervalList;
     typeList = typeList;
 
+    tagString(tags: Tag[]) {
+      const names = tags.map(item => item.name);
+      return names.length === 0 ? "无" : names.join(",");
+    }
+
     get recordList() {
       return this.$store.state.recordList;
     }
@@ -42,15 +47,15 @@
     }
 
     get result() {
-      type HashTableItem={
-        title:string
-        items:RecordItem[]
+      type HashTableItem = {
+        title: string
+        items: RecordItem[]
       }
       const {recordList} = this;
       const hashTable: { [key: string]: HashTableItem } = {};
       for (let i = 0; i < recordList.length; i++) {
         const [date, time] = recordList[i].createAt.split("T");
-        hashTable[date] = hashTable[date] || {title:date,items:[]};
+        hashTable[date] = hashTable[date] || {title: date, items: []};
         hashTable[date].items.push(recordList[i]);
       }
       return hashTable;
@@ -74,5 +79,23 @@
 
     ::v-deep .interval-item {
         height: 48px;
+    }
+
+    %item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 16px;
+        line-height: 24px;
+    }
+
+    .title {
+        @extend %item;
+        background: #e9e9e9;
+    }
+
+    .record {
+        @extend %item;
+
     }
 </style>
