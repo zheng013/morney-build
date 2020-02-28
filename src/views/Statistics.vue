@@ -63,15 +63,25 @@
       //   items: RecordItem[]
       // }
       const {recordList} = this;
-      const hashTable: { tittle: string, items: RecordItem[] } [] = [];
+      if (recordList.length === 0) {return [];}
       // for (let i = 0; i < recordList.length; i++) {
       //   const [date, time] = recordList[i].createAt.split("T");
       //   hashTable[date] = hashTable[date] || {title: date, items: []};
       //   hashTable[date].items.push(recordList[i]);
       // }
       const newRecordList = clone(recordList as RecordItem[]).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
-      console.log(newRecordList);
-      return [];
+      const hashTable = [{title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"), items: [newRecordList[0]]}];//: { tittle: string, items: RecordItem[] } []
+      for (let i = 0; i < newRecordList.length; i++) {
+        const current = newRecordList[i];
+        const last = hashTable[hashTable.length - 1];
+        if(dayjs(current.createAt).isSame(dayjs(last.title),'day')){
+          last.items.push(current)
+        }else {
+          hashTable.push({title: dayjs(newRecordList[i].createAt).format("YYYY-MM-DD"), items: [newRecordList[i]]})
+        }
+      }
+
+      return hashTable;
 
     }
   }
