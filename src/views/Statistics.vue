@@ -2,6 +2,18 @@
     <Layout>
         <Tabs :data-source='typeList' class-prefix="type" :value.sync="type"/>
         <Tabs :data-source='intervalList' class-prefix="interval" :value.sync="intervalType"/>
+        <div>
+            <ol>
+                <li v-for="group in result" :key="group.id">
+                    {{group.title}}
+                    <ol>
+                        <li v-for="item in group.items" :key="item.id">
+                            {{item.amount}}
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
     </Layout>
 </template>
 
@@ -10,7 +22,7 @@
   import {Component} from "vue-property-decorator";
   import Tabs from "@/components/Tabs.vue";
   import typeList from "@/constants/typeList";
-  import intervalList from "@/constants/intervalList"
+  import intervalList from "@/constants/intervalList";
 
   @Component({
     components: {Tabs}
@@ -20,6 +32,30 @@
     intervalType = "day";
     intervalList = intervalList;
     typeList = typeList;
+
+    get recordList() {
+      return this.$store.state.recordList;
+    }
+
+    beforeCreate() {
+      this.$store.commit("fetchRecordList");
+    }
+
+    get result() {
+      type HashTableItem={
+        title:string
+        items:RecordItem[]
+      }
+      const {recordList} = this;
+      const hashTable: { [key: string]: HashTableItem } = {};
+      for (let i = 0; i < recordList.length; i++) {
+        const [date, time] = recordList[i].createAt.split("T");
+        hashTable[date] = hashTable[date] || {title:date,items:[]};
+        hashTable[date].items.push(recordList[i]);
+      }
+      return hashTable;
+
+    }
   }
 </script>
 
@@ -35,7 +71,8 @@
             display: none;
         }
     }
-    ::v-deep .interval-item{
+
+    ::v-deep .interval-item {
         height: 48px;
     }
 </style>

@@ -15,7 +15,7 @@ const store = new Vuex.Store({
   mutations: {
     createRecord(state, record: RecordItem) {
       const deepClone = clone(record);
-      deepClone.createAt = new Date();
+      deepClone.createAt = new Date().toISOString();
       state.recordList.push(deepClone);
       store.commit('saveRecord');
     },
