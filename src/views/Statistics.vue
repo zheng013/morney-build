@@ -1,9 +1,9 @@
 <template>
-    <Layout>
+    <Layout >
         <Tabs :data-source='typeList' class-prefix="type" :value.sync="type"/>
         <Tabs :data-source='intervalList' class-prefix="interval" :value.sync="intervalType"/>
         <ol>
-            <li v-for="group in result" :key="group.id">
+            <li v-for="(group,index) in result" :key="index">
                 <h3 class="title">{{beautyTitle(group.title)}}</h3>
                 <ol>
                     <li v-for="item in group.items" class="record" :key="item.id">
@@ -69,15 +69,15 @@
       //   hashTable[date] = hashTable[date] || {title: date, items: []};
       //   hashTable[date].items.push(recordList[i]);
       // }
-      const newRecordList = clone(recordList as RecordItem[]).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      const newRecordList = clone(recordList as RecordItem[]).filter(item => item.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
       const hashTable = [{title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"), items: [newRecordList[0]]}];//: { tittle: string, items: RecordItem[] } []
       for (let i = 0; i < newRecordList.length; i++) {
         const current = newRecordList[i];
         const last = hashTable[hashTable.length - 1];
-        if(dayjs(current.createAt).isSame(dayjs(last.title),'day')){
-          last.items.push(current)
-        }else {
-          hashTable.push({title: dayjs(newRecordList[i].createAt).format("YYYY-MM-DD"), items: [newRecordList[i]]})
+        if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
+          last.items.push(current);
+        } else {
+          hashTable.push({title: dayjs(newRecordList[i].createAt).format("YYYY-MM-DD"), items: [newRecordList[i]]});
         }
       }
 
@@ -130,4 +130,5 @@
         white-space: nowrap;
         overflow: hidden;
     }
+
 </style>
