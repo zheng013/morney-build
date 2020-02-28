@@ -60,7 +60,7 @@
       }
     }
 
-    onUpdateAmount(number: string) {
+    onUpdateAmount(number: string) { //通过$emit传出的事件都是以字符串传值。
       if (this.record) {
         this.record.amount = parseFloat(number);
       }

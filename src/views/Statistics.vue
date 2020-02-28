@@ -1,10 +1,10 @@
 <template>
-    <Layout >
+    <Layout>
         <Tabs :data-source='typeList' class-prefix="type" :value.sync="type"/>
         <Tabs :data-source='intervalList' class-prefix="interval" :value.sync="intervalType"/>
         <ol>
             <li v-for="(group,index) in result" :key="index">
-                <h3 class="title">{{beautyTitle(group.title)}}</h3>
+                <h3 class="title">{{beautyTitle(group.title)}} <span>¥{{group.total}}</span></h3>
                 <ol>
                     <li v-for="item in group.items" class="record" :key="item.id">
                         <span>{{tagString(item.tags)}}</span>
@@ -69,8 +69,12 @@
       //   hashTable[date] = hashTable[date] || {title: date, items: []};
       //   hashTable[date].items.push(recordList[i]);
       // }
+      type Result = { title: string, total?: number, items: RecordItem[] }[]
       const newRecordList = clone(recordList as RecordItem[]).filter(item => item.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
-      const hashTable = [{title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"), items: [newRecordList[0]]}];//: { tittle: string, items: RecordItem[] } []
+      const hashTable: Result = [{
+        title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"),
+        items: [newRecordList[0]]
+      }];//: { tittle: string, items: RecordItem[] } []
       for (let i = 0; i < newRecordList.length; i++) {
         const current = newRecordList[i];
         const last = hashTable[hashTable.length - 1];
@@ -80,7 +84,9 @@
           hashTable.push({title: dayjs(newRecordList[i].createAt).format("YYYY-MM-DD"), items: [newRecordList[i]]});
         }
       }
-
+      hashTable.map(group => {
+        group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      });
       return hashTable;
 
     }
