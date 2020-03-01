@@ -2,7 +2,7 @@
     <Layout>
         <Tabs :data-source='typeList' class-prefix="type" :value.sync="type"/>
         <Tabs :data-source='intervalList' class-prefix="interval" :value.sync="intervalType"/>
-        <ol>
+        <ol v-if="result.length>0">
             <li v-for="(group,index) in result" :key="index">
                 <h3 class="title">{{beautyTitle(group.title)}} <span>¥{{group.total}}</span></h3>
                 <ol>
@@ -14,6 +14,9 @@
                 </ol>
             </li>
         </ol>
+        <div v-else class="noResult">
+            目前没有任何内容
+        </div>
     </Layout>
 </template>
 
@@ -63,7 +66,6 @@
       //   items: RecordItem[]
       // }
       const {recordList} = this;
-      if (recordList.length === 0) {return [];}
       // for (let i = 0; i < recordList.length; i++) {
       //   const [date, time] = recordList[i].createAt.split("T");
       //   hashTable[date] = hashTable[date] || {title: date, items: []};
@@ -71,6 +73,7 @@
       // }
       type Result = { title: string, total?: number, items: RecordItem[] }[]
       const newRecordList = clone(recordList as RecordItem[]).filter(item => item.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      if (newRecordList.length === 0) {return [];}
       const hashTable: Result = [{
         title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"),
         items: [newRecordList[0]]
@@ -94,6 +97,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .noResult{
+        padding-top: 16px;
+        text-align: center;
+    }
     ::v-deep .type-item {
         background: white;
 

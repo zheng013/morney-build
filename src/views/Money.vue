@@ -4,7 +4,7 @@
         {{record}}
         <Tags @update:value="onUpdateTags"/>
         <div class="form-wrapper">
-            <FormItem field-name="备注" @update:value="onUpdateNotes" place-holder="在这里输入备注"/>
+            <FormItem field-name="备注" :value.sync="record.notes" place-holder="在这里输入备注"/>
         </div>
         <Tabs :data-source='typeList' :value.sync="record.type"/>
         <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
@@ -54,11 +54,6 @@
       }
     }
 
-    onUpdateNotes(notes: string) {
-      if (this.record) {
-        this.record.notes = notes;
-      }
-    }
 
     onUpdateAmount(number: string) { //通过$emit传出的事件都是以字符串传值。
       if (this.record) {
@@ -69,6 +64,7 @@
     saveRecord() {
       if (this.record) {
         this.$store.commit("createRecord", this.record);
+        this.record.notes=''
       }
     }
   }
