@@ -1,3 +1,4 @@
+
 type RecordItem = {
   tags: Tag[]
   notes: string
@@ -22,3 +23,10 @@ interface Window {
 type DataSourceItem = {
   text: string, value: string
 };
+type RootState={
+  recordList:  RecordItem[]
+  tagList: Tag[]
+  tag: Tag
+  tagError: Error|null
+  recordError:Error|null
+}

@@ -78,7 +78,7 @@
         title: dayjs(newRecordList[0].createAt).format("YYYY-MM-DD"),
         items: [newRecordList[0]]
       }];//: { tittle: string, items: RecordItem[] } []
-      for (let i = 0; i < newRecordList.length; i++) {
+      for (let i = 1; i < newRecordList.length; i++) {
         const current = newRecordList[i];
         const last = hashTable[hashTable.length - 1];
         if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {

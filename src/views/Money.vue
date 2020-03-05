@@ -1,7 +1,6 @@
 <template>
     <Layout class-prefix="layout">
         <!--一个文件超过一百五十行的代码，开始分模块优化-->
-        {{record}}
         <Tags @update:value="onUpdateTags"/>
         <div class="form-wrapper">
             <FormItem field-name="备注" :value.sync="record.notes" place-holder="在这里输入备注"/>
@@ -16,20 +15,20 @@
   import Tags from "@/components/Money/Tags.vue";
   import FormItem from "@/components/Money/FormItem.vue";
   import NumberPad from "@/components/Money/NumberPad.vue";
-  import Tabs from '@/components/Tabs.vue'
-  import typeList from "@/constants/typeList"
+  import Tabs from "@/components/Tabs.vue";
+  import typeList from "@/constants/typeList";
 
 
   // const tagList=tagsModel.fetch();
   window.localStorage.setItem("version", "0.0.2"); //进行数据库升级  数据库迁移的策略
   @Component({
-    components: {NumberPad, FormItem, Tags,Tabs},
+    components: {NumberPad, FormItem, Tags, Tabs},
     computed: {
       recordList() {
         return this.$store.state.recordList;
       },
-      tags(){
-        return this.$store.state.tags
+      tags() {
+        return this.$store.state.tagList;
       }
     }
   }) //必须置为最后一行
@@ -45,7 +44,7 @@
 
     created() {
       this.$store.commit("fetchRecordList");
-      this.$store.commit("fetchTagList")
+      this.$store.commit("fetchTagList");
     }
 
     onUpdateTags(tag: Tag[]) {
@@ -63,8 +62,15 @@
 
     saveRecord() {
       if (this.record) {
+        if (!this.record.tags || this.record.tags.length === 0) {
+          return window.alert("请至少选择一个标签");
+
+        }
         this.$store.commit("createRecord", this.record);
-        this.record.notes=''
+        this.record.notes = "";
+        if (this.$store.state.recordError === null) {
+          window.alert("添加成功");
+        }
       }
     }
   }

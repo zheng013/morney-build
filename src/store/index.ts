@@ -6,12 +6,15 @@ import createId from '@/lib/createId';
 
 Vue.use(Vuex);
 
+
 const store = new Vuex.Store({
   state: {
-    recordList: [] as RecordItem[],
-    tagList: [] as Tag[],
-    tag: {} as Tag
-  },
+    recordList: [],
+    tagList: [],
+    tag: {},
+    tagError: null,
+    recordError:null
+  } as unknown as RootState,
   mutations: {
     createRecord(state, record: RecordItem) {
       const deepClone = clone(record);
@@ -27,19 +30,22 @@ const store = new Vuex.Store({
     },
     fetchTagList(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tags') || '[]');
+      if (!state.tagList || state.tagList.length === 0) {
+        store.commit('createTags', '衣');
+        store.commit('createTags', '食');
+        store.commit('createTags', '住');
+        store.commit('createTags', '行');
+      }
     },
     createTags(state, name: string) {
       // @ts-ignore
       const names = state.tagList.map(item => item.name);
       const id = createId().toString();
       if (names.indexOf(name) >= 0) {
-        window.alert('您输入的标签名重复');
-        return 'duplicated';
+        return  state.tagError = new Error('duplicated');
       }
       state.tagList.push({id: id, name: name});
       store.commit('saveTagList');
-      window.alert('添加成功');
-      return 'success';
     },
     destroy(state, id: string) {
       const tag = state.tagList.filter(item => item.id === id)[0];
