@@ -28,5 +28,8 @@ module.exports = {
     // config.plugin('svg-sprite').use(require('svg-sprite-loader-mod/plugin'), [{plainSprite: true}])
     // config.module.rule('svg').exclude.add(dir)
 
-  }
+  },
+
+
+
 }

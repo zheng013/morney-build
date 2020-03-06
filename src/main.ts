@@ -18,11 +18,11 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
-console.log(document.documentElement.clientWidth);
+
 if (document.documentElement.clientWidth > 500) {
   window.alert('请在手机中浏览，以保证页面效果');
   const img = document.createElement('img');
-  img.src = '/morney-qrcode.png';
+  img.src = 'morney-qrcode.png';
   img.style.position = 'fixed';
   img.style.left = '50%';
   img.style.top = '50%';
