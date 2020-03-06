@@ -13,7 +13,7 @@ export class TagHelper extends Vue {
     if (name) {
       this.$store.commit('createTags', name);
       if (this.$store.state.tagError) {
-        window.alert(map[this.$store.state.tagError.message]);
+        window.alert(map[this.$store.state.tagError.message]||'未知错误');
       }
       // if (this.dataSource) {
       //   const id = createId();

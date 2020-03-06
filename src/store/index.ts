@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     tagList: [],
     tag: {},
     tagError: null,
-    recordError:null
+    recordError: null
   } as unknown as RootState,
   mutations: {
     createRecord(state, record: RecordItem) {
@@ -39,10 +39,11 @@ const store = new Vuex.Store({
     },
     createTags(state, name: string) {
       // @ts-ignore
+      state.tagError = null;
       const names = state.tagList.map(item => item.name);
       const id = createId().toString();
       if (names.indexOf(name) >= 0) {
-        return  state.tagError = new Error('duplicated');
+        return state.tagError = new Error('duplicated');
       }
       state.tagList.push({id: id, name: name});
       store.commit('saveTagList');
